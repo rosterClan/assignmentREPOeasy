@@ -13,6 +13,7 @@ ssm = boto3.client("ssm", region_name=AWS_REGION)
 
 def _param(name, decrypt=False):
     resp = ssm.get_parameter(Name=name, WithDecryption=decrypt)
+    print(resp)
     return resp["Parameter"]["Value"]
 
 DB_HOST        = _param("/docsummary/db/host")
