@@ -8,21 +8,22 @@ import psycopg
 from flask import Flask, render_template, request, redirect, url_for, flash
 import google.generativeai as genai
 
-# =========================================================
-# Configuration
-# Update with proper values before running the app
-# =========================================================
+AWS_REGION = "ap-southeast-2"
+ssm = boto3.client("ssm", region_name=AWS_REGION)
 
-AWS_REGION = "us-east-1"
-S3_BUCKET_NAME = "YOUR_S3_BUCKET_NAME"
+def _param(name, decrypt=False):
+    resp = ssm.get_parameter(Name=name, WithDecryption=decrypt)
+    return resp["Parameter"]["Value"]
 
-DB_HOST = "YOUR_RDS_ENDPOINT"
-DB_PORT = 5432
-DB_NAME = "postgres"
-DB_USER = "YOUR_DB_USERNAME"
-DB_PASSWORD = "YOUR_DB_PASSWORD"
+DB_HOST        = _param("/docsummary/db/host")
+DB_NAME        = _param("/docsummary/db/name")
+DB_USER        = _param("/docsummary/db/user")
+DB_PASSWORD    = _param("/docsummary/db/password")
+DB_PORT        = _param("/docsummary/db/password")
+S3_BUCKET      = _param("/docsummary/s3/bucket")
+GOOGLE_API_KEY = _param("/docsummary/gemini/api_key") # ideally encrypyted lol
 
-GOOGLE_API_KEY = "AIzaSyCUYVrjV2dh2JJ1rhko1ViR8yvwkHfpAI0"
+S3_BUCKET_NAME = _param("/docsummary/S3_BUCKET_NAME")
 
 ALLOWED_EXTENSIONS = {"pdf"}
 MAX_FILE_SIZE_MB = 5
@@ -35,7 +36,7 @@ MODEL_NAME = "gemini-2.5-flash"
 # =========================================================
 
 app = Flask(__name__)
-app.secret_key = "replace-this-with-a-better-secret"
+app.secret_key = _param("/docsummary/secret")
 
 # Optional upload size limit for Flask
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE_MB * 1024 * 1024
