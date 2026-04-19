@@ -18,9 +18,9 @@ def _param(name, decrypt=False):
 
 DB_HOST        = _param("/docsummary/db/host")
 DB_NAME        = _param("/docsummary/db/name")
-DB_USER        = _param("/docsummary/db/user")
+DB_USER        = _param("/docsummary/db/DB_USER")
 DB_PASSWORD    = _param("/docsummary/db/DB_PASSWORD")
-DB_PORT        = 5432
+DB_PORT        = _param("/docsummary/db/DB_PORT")
 S3_BUCKET      = _param("/docsummary/S3_BUCKET_NAME")
 GOOGLE_API_KEY = _param("/docsummary/gemini/api_key") # ideally encrypyted lol
 
