@@ -13,18 +13,18 @@ ssm = boto3.client("ssm", region_name=AWS_REGION)
 
 def _param(name, decrypt=False):
     resp = ssm.get_parameter(Name=name, WithDecryption=decrypt)
-    print(resp)
+    print(resp["Parameter"]["Value"])
     return resp["Parameter"]["Value"]
 
 DB_HOST        = _param("/docsummary/db/host")
 DB_NAME        = _param("/docsummary/db/name")
 DB_USER        = _param("/docsummary/db/user")
-DB_PASSWORD    = _param("/docsummary/db/password")
-DB_PORT        = _param("/docsummary/db/password")
-S3_BUCKET      = _param("/docsummary/s3/bucket")
+DB_PASSWORD    = _param("/docsummary/db/DB_PASSWORD")
+DB_PORT        = 5432
+S3_BUCKET      = _param("/docsummary/S3_BUCKET_NAME")
 GOOGLE_API_KEY = _param("/docsummary/gemini/api_key") # ideally encrypyted lol
 
-S3_BUCKET_NAME = _param("/docsummary/S3_BUCKET_NAME")
+S3_BUCKET_NAME = _param("/docsummary/googleAPI/key")
 
 ALLOWED_EXTENSIONS = {"pdf"}
 MAX_FILE_SIZE_MB = 5
