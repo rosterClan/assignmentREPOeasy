@@ -22,9 +22,9 @@ DB_USER        = _param("/docsummary/db/DB_USER")
 DB_PASSWORD    = _param("/docsummary/db/DB_PASSWORD")
 DB_PORT        = _param("/docsummary/db/DB_PORT")
 S3_BUCKET      = _param("/docsummary/S3_BUCKET_NAME")
-GOOGLE_API_KEY = _param("/docsummary/gemini/api_key") # ideally encrypyted lol
+GOOGLE_API_KEY = _param("/docsummary/googleAPI/key") # ideally encrypyted lol
 
-S3_BUCKET_NAME = _param("/docsummary/googleAPI/key")
+S3_BUCKET_NAME = _param("/docsummary/S3_BUCKET_NAME")
 
 ALLOWED_EXTENSIONS = {"pdf"}
 MAX_FILE_SIZE_MB = 5
